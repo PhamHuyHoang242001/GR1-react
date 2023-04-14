@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+// import NewTable from "./component/NewTable";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import TodoList from "./component/ToDoList";
+import TodoDetail from "./component/TodoDetails";
 
+import NewTable from "./component/NewTable";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {/* <NewTable /> */}
+      <Router>
+        <Routes>
+          <Route path="/table" element={<NewTable />}></Route>
+          <Route path="/todolist" element={<TodoList />}></Route>
+          <Route path="/todo/:id" element={<TodoDetail />} />
+          <Route path="/" element={<h1>hello</h1>}></Route>
+        </Routes>
+      </Router>
+    </>
   );
 }
 

@@ -1,12 +1,11 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 function TodoDetail() {
-  const { id } = useParams();
-
+  const { prid } = useParams();
   return (
     <div>
       <h2>Todo Detail</h2>
-      <p>ID: {id}</p>
+      <p>ID: {prid}</p>
     </div>
   );
 }

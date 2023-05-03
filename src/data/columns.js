@@ -9,12 +9,13 @@ import {
 } from "@ant-design/icons";
 import "../App.css";
 import { Link } from "react-router-dom";
+
 const columns = [
   {
     title: "name",
     dataIndex: "name",
     key: "name",
-    render: (text) => <Link to="/">{text}</Link>,
+    render: (text) => <Link to={`/table/${text}`}>{text}</Link>,
     sorter: (a, b) => a.name - b.name,
   },
   {
@@ -82,6 +83,12 @@ const columns = [
     dataIndex: "count4",
     key: "count",
     sorter: (a, b) => a.count4 - b.count4,
+  },
+  {
+    title: "Action",
+    dataIndex: "",
+    key: "x",
+    render: () => <Link to="/">delete</Link>,
   },
 ];
 export default columns;

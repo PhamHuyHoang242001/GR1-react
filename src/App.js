@@ -4,6 +4,7 @@ import TodoList from "./component/ToDoList";
 import TodoDetail from "./component/TodoDetails";
 import GeneDetails from "./component/GenDetails";
 import NewTable from "./component/NewTable";
+import TestFileTxt from "./component/TestFileTxt";
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/table" element={<NewTable />}></Route>
+          <Route path="/testTxt" element={<TestFileTxt />}></Route>
           <Route path="/table/:gene" element={<GeneDetails />}></Route>
           <Route path="/todolist" element={<TodoList />}></Route>
           <Route path="/todo/:prid" element={<TodoDetail />} />

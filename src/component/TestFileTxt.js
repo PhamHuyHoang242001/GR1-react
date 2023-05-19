@@ -1,10 +1,6 @@
-import { React, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import geneDatas from "../data/geneDatas";
-
-export default function GeneDetails() {
-  const { gene } = useParams();
-
+const TestFileTxt = () => {
   const [geneData, setGeneData] = useState([]);
 
   useEffect(() => {
@@ -29,23 +25,30 @@ export default function GeneDetails() {
     fetchGeneData();
   }, []);
 
-  var genzz = geneData.filter((gen) => gen.name === gene);
-
   return (
     <div>
-      {genzz.length > 0 && (
-        <>
-          <p style={{ fontSize: "24px", fontWeight: "bold" }}>
-            {genzz[0].name}
-          </p>
-          <p style={{ marginTop: "10px", fontSize: "16px", color: "#333" }}>
-            {genzz[0].description}
-          </p>
-          <p style={{ marginTop: "10px", fontSize: "14px", color: "#999" }}>
-            {genzz[0].last_review_date}
-          </p>
-        </>
-      )}
+      <h1>Gene Data</h1>
+      <table>
+        <thead>
+          <tr>
+            {geneData.length > 0 &&
+              Object.keys(geneData[0]).map((header) => (
+                <th key={header}>{header}</th>
+              ))}
+          </tr>
+        </thead>
+        <tbody>
+          {geneData.map((row, index) => (
+            <tr key={index}>
+              {Object.values(row).map((value, index) => (
+                <td key={index}>{value}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-}
+};
+
+export default TestFileTxt;

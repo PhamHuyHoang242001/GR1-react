@@ -43,6 +43,7 @@ function PaginationLung() {
   );
 
   const totalItems = isSearch ? searchData.length : filteredArticles.length;
+  const currentArticleSearch = searchData.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
   return (
     <div>
@@ -99,7 +100,13 @@ function PaginationLung() {
           </Select>
         </div>
       </div>
-      <LungArticle article={currentArticle} />
+      { isSearch ?(
+                <LungArticle article={ currentArticleSearch }  />
+                ):(
+                  <LungArticle article={currentArticle} />
+                )
+            }
+      
       <div
         style={{
           display: "flex",

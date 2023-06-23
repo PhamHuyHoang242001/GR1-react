@@ -7,6 +7,7 @@ const { Panel } = Collapse;
 const { Meta } = Card;
 
 const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
+  console.log(datas);
   const [visible, setVisible] = useState(false);
   const [currentComponent, setCurrentComponent] = useState(null);
   const [visible2, setVisible2] = useState(false);

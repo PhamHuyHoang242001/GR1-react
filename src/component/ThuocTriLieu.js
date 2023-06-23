@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Menu } from 'antd';
+import { Layout, Menu } from 'antd';
 import ViewThuocTriLieu from './ViewThuocTriLieu';
 import ViewThuocHetHan from './ViewThuocHetHan';
 import axios from 'axios';
 import ViewFDA from './ViewFDA';
+import { Content, Header } from 'antd/es/layout/layout';
 
-const { SubMenu } = Menu;
 
 function App() {
   const [selectedButton, setSelectedButton] = useState("1");
@@ -68,29 +68,38 @@ function App() {
       fetchData2();
     } else if (selectedButton === "3"){
       fetchData3();
-    } else {
-        fetchData1();
+    } else if (selectedButton === "1"){ 
+      fetchData1();
     }
   }, [selectedButton,curentPage]);
 
   return (
     <>
-        <Menu onClick={handleMenuClick} selectedKeys={[selectedButton]} mode="horizontal">
-        <SubMenu key="buttons" title="Mục" mode="horizontal">
-            <Menu.Item key="1">còn hạn</Menu.Item>
-            <Menu.Item key="2">hết hạn</Menu.Item>
-            <Menu.Item key="3">FDA</Menu.Item>
-        </SubMenu>
+          <Layout>
+      <Header>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          selectedKeys={[selectedButton]}
+          onClick={handleMenuClick}
+        >
+          <Menu.Item key="1">Còn hạn</Menu.Item>
+          <Menu.Item key="2">Hết hạn</Menu.Item>
+          <Menu.Item key="3">FDA</Menu.Item>
         </Menu>
-        { datas && selectedButton === "1" && (
-            <ViewThuocTriLieu datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
+      </Header>
+      <Content style={{ padding: '50px' }}>
+        {datas && selectedButton === "1" && (
+          <ViewThuocTriLieu datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
         )}
-        { datas && selectedButton === "2" && (
-            <ViewThuocHetHan datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
+        {datas && selectedButton === "2" && (
+          <ViewThuocHetHan datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
         )}
-        { datas && selectedButton === "3" && (
-            <ViewFDA datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
+        {datas && selectedButton === "3" && (
+          <ViewFDA datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
         )}
+      </Content>
+    </Layout>
     </>
   );
 }

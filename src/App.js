@@ -6,6 +6,7 @@ import NewTable from "./component/NewTable";
 import TestFileTxt from "./component/TestFileTxt";
 import PaginationArticle from "./component/PaginationArticle";
 import ViewThuocTriLieu from "./component/ViewThuocTriLieu";
+import ThuocTriLieu from "./component/ThuocTriLieu";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
           <Route path="/todo/:prid" element={<TodoDetail />} />
           <Route path="/" element={<h1>hello</h1>}></Route>
           <Route path="/thuoc-dich" element={<ViewThuocTriLieu />}></Route>
+          <Route path="/thuoc-tri-lieu" element={<ThuocTriLieu />}></Route>
 
         </Routes>
       </Router>

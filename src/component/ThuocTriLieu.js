@@ -10,6 +10,7 @@ import { Content, Header } from 'antd/es/layout/layout';
 function App() {
   const [selectedButton, setSelectedButton] = useState("1");
   const [datas, setDatas] = useState(null);
+  const [dataFDA, setDataFDA] = useState(null);
   const [curentPage, setCurentPage] = useState(1);
   const [metadata, setMetadata] = useState(null);
 
@@ -56,7 +57,7 @@ function App() {
             `https://ut-project-be.vercel.app/api/fda-medicine?page=${curentPage}`
           );
           console.log(response);
-          setDatas(response.data.data);
+          setDataFDA(response.data.data);
           console.log(response.data.metadata);
           console.log(response.data.data);
           setMetadata(response.data.metadata);
@@ -95,8 +96,8 @@ function App() {
         {datas && selectedButton === "2" && (
           <ViewThuocHetHan datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
         )}
-        {datas && selectedButton === "3" && (
-          <ViewFDA datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
+        {dataFDA && selectedButton === "3" && (
+          <ViewFDA datas={dataFDA} setCurentPage={setCurentPage} metadata={metadata} />
         )}
       </Content>
     </Layout>

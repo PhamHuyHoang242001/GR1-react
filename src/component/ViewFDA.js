@@ -9,11 +9,17 @@ import {
   Form,
   Input,
 } from "antd";
-import { EditOutlined, DeleteOutlined, PlusOutlined, EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  PlusOutlined,
+  EyeOutlined,
+  EyeInvisibleOutlined,
+} from "@ant-design/icons";
 import "./styles.css";
 import axios from "axios";
 
-const ViewFDA = ({ datas, setCurentPage, metadata }) => {
+const ViewFDA = ({ datas, setCurentPage, metadata, role }) => {
   const [currentPage1, setCurrentPage1] = useState(1);
   const [visible5, setVisible5] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -21,7 +27,7 @@ const ViewFDA = ({ datas, setCurentPage, metadata }) => {
   const [showEvidenceEN, setShowEvidenceEN] = useState({});
   const [showEvidenceVN, setShowEvidenceVN] = useState({});
 
-   const toggleEvidenceEN = (medicineId) => {
+  const toggleEvidenceEN = (medicineId) => {
     setShowEvidenceEN((prevState) => ({
       ...prevState,
       [medicineId]: !prevState[medicineId],
@@ -116,30 +122,38 @@ const ViewFDA = ({ datas, setCurentPage, metadata }) => {
   };
   return (
     <div>
-      <Button
-        type="text"
-        icon={<PlusOutlined />}
-        onClick={() => handleAddMedicine()}
-      >
-        Thêm thuốc
-      </Button>
+      {role && (
+        <Card style={{ marginBottom: 16 }}>
+          <Button
+            type="text"
+            icon={<PlusOutlined />}
+            onClick={() => handleAddMedicine()}
+          >
+            Thêm thuốc
+          </Button>
+        </Card>
+      )}
+
       {datas.map((medicine) => (
         <Card className="medicine-card" key={medicine._id}>
+          {role && (
             <Space>
-            <Button
-              type="text"
-              icon={<EditOutlined />}
-              onClick={() => handleEditComponent(medicine)}
-            />
-            <Popconfirm
-              title="Are you sure to delete this component?"
-              onConfirm={() => handleDeleteComponent(medicine._id)}
-              okText="Yes"
-              cancelText="No"
-            >
-              <Button type="text" danger icon={<DeleteOutlined />} />
-            </Popconfirm>
-          </Space>
+              <Button
+                type="text"
+                icon={<EditOutlined />}
+                onClick={() => handleEditComponent(medicine)}
+              />
+              <Popconfirm
+                title="Are you sure to delete this component?"
+                onConfirm={() => handleDeleteComponent(medicine._id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <Button type="text" danger icon={<DeleteOutlined />} />
+              </Popconfirm>
+            </Space>
+          )}
+
           <h2>{medicine.medicine_name}</h2>
           <p>Type: {medicine.type}</p>
           <p>FDA Approved: {medicine.fda_approved ? "Còn Hạn" : "Hết Hạn"}</p>
@@ -147,29 +161,40 @@ const ViewFDA = ({ datas, setCurentPage, metadata }) => {
             <a href={medicine.link_evidence}>Link to Evidence</a>
           </p>
           <p>
-            <a href={medicine.link_image} >Link to image</a>
+            <a href={medicine.link_image}>Link to image</a>
           </p>
-        
+
           {/* <img src={medicine.link_image} alt={medicine.medicine_name} /> */}
           <h3>
-            Evidence (English):{' '}
+            Evidence (English):{" "}
             <Button
               type="text"
-              icon={showEvidenceEN[medicine._id] ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+              icon={
+                showEvidenceEN[medicine._id] ? (
+                  <EyeInvisibleOutlined />
+                ) : (
+                  <EyeOutlined />
+                )
+              }
               onClick={() => toggleEvidenceEN(medicine._id)}
             />
           </h3>
           {showEvidenceEN[medicine._id] && <p>{medicine.text_evidence_us}</p>}
           <h3>
-            Evidence (Vietnamese):{' '}
+            Evidence (Vietnamese):{" "}
             <Button
               type="text"
-              icon={showEvidenceVN[medicine._id] ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+              icon={
+                showEvidenceVN[medicine._id] ? (
+                  <EyeInvisibleOutlined />
+                ) : (
+                  <EyeOutlined />
+                )
+              }
               onClick={() => toggleEvidenceVN(medicine._id)}
             />
           </h3>
           {showEvidenceVN[medicine._id] && <p>{medicine.text_evidence_vn}</p>}
-          
         </Card>
       ))}
       <Modal

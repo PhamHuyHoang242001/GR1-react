@@ -1,12 +1,25 @@
-import React, { useState } from 'react';
-import { Card, Row, Col, Popconfirm, Button, Space, Collapse, Modal, Form, Input, message, Pagination } from 'antd';
-import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
-import axios from 'axios';
+import React, { useState } from "react";
+import {
+  Card,
+  Row,
+  Col,
+  Popconfirm,
+  Button,
+  Space,
+  Collapse,
+  Modal,
+  Form,
+  Input,
+  message,
+  Pagination,
+} from "antd";
+import { EditOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import axios from "axios";
 
 const { Panel } = Collapse;
 const { Meta } = Card;
 
-const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
+const ViewThuocTriLieu = ({ datas, setCurentPage, metadata, role }) => {
   console.log(datas);
   const [visible, setVisible] = useState(false);
   const [currentComponent, setCurrentComponent] = useState(null);
@@ -19,12 +32,12 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
 
   const handlePageChange = (page) => {
     setCurrentPage1(page);
-    setCurentPage(page)
+    setCurentPage(page);
   };
   const handleEdit = (component) => {
     setCurrentMedicine(component);
     setVisible2(true);
-    console.log('Edit component:', component);
+    console.log("Edit component:", component);
   };
 
   const handleModal2Cancel = () => {
@@ -33,62 +46,66 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
   };
 
   const handleModal2Submit = (values) => {
-    axios.post('https://ut-project-be.vercel.app/api/edit-vn-medicine', { 
-      medicine_name: values.medicine_name, content:values.content,
-      medicineId: currentMedicine._id, dosage_form: values.dosage_form,
-      company_name: values.company_name, circulation_permit: values.circulation_permit,
-      approved: true
-    })
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.log(message);
-    });
+    axios
+      .post("https://ut-project-be.vercel.app/api/edit-vn-medicine", {
+        medicine_name: values.medicine_name,
+        content: values.content,
+        medicineId: currentMedicine._id,
+        dosage_form: values.dosage_form,
+        company_name: values.company_name,
+        circulation_permit: values.circulation_permit,
+        approved: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(message);
+      });
 
-    console.log('Edit component:', 'with values:', values);
+    console.log("Edit component:", "with values:", values);
     setVisible2(false);
     setCurrentMedicine(null);
   };
 
   const handleDelete = (medicine_Id) => {
-    axios.post('https://ut-project-be.vercel.app/api/delete-vn-medicine', { medicineId: medicine_Id })
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch(error => {
-      console.log(message);
-    });
-    
-  };
-  const handleDeleteComponent = (componentId) => {
-    axios.post('https://ut-project-be.vercel.app/api/delete-component', { 
-      componentId: componentId
+    axios
+      .post("https://ut-project-be.vercel.app/api/delete-vn-medicine", {
+        medicineId: medicine_Id,
       })
-      .then(response => {
-        console.log("xoa hoat chat thanh cong");
+      .then((response) => {
+        console.log(response.data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(message);
       });
-
+  };
+  const handleDeleteComponent = (componentId) => {
+    axios
+      .post("https://ut-project-be.vercel.app/api/delete-component", {
+        componentId: componentId,
+      })
+      .then((response) => {
+        console.log("xoa hoat chat thanh cong");
+      })
+      .catch((error) => {
+        console.log(message);
+      });
   };
   const handleAddMedicine = (componentId) => {
-    setCurrentAdd(componentId)
+    setCurrentAdd(componentId);
     setVisible3(true);
-    console.log('Add medicine to component:', componentId);
+    console.log("Add medicine to component:", componentId);
   };
-  
 
   const handleAddComponent = () => {
     setVisible4(true);
-    console.log('Add component');
+    console.log("Add component");
   };
 
   const handleEditComponent = (component) => {
     setCurrentComponent(component);
     setVisible(true);
-    
   };
 
   const handleModalCancel = () => {
@@ -97,19 +114,26 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
   };
 
   const handleModalSubmit = (values) => {
-    axios.post('https://ut-project-be.vercel.app/api/edit-component', { 
-      componentId: currentComponent._id, cure:values.cure,
-        component: values.component, gene: values.gene
-
+    axios
+      .post("https://ut-project-be.vercel.app/api/edit-component", {
+        componentId: currentComponent._id,
+        cure: values.cure,
+        component: values.component,
+        gene: values.gene,
       })
-      .then(response => {
-         console.log('sửa thông tin hoạt chất thành công');
+      .then((response) => {
+        console.log("sửa thông tin hoạt chất thành công");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(message);
       });
-    
-    console.log('Edit component:', currentComponent._id, 'with values:', values);
+
+    console.log(
+      "Edit component:",
+      currentComponent._id,
+      "with values:",
+      values
+    );
     setVisible(false);
     setCurrentComponent(null);
   };
@@ -117,19 +141,23 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
     setVisible3(false);
   };
   const handleModal3Submit = (values) => {
-      axios.post('https://ut-project-be.vercel.app/api/vn-medicine-approved', { 
-        medicine_name: values.medicine_name, content:values.content,
-        component: currentAdd, dosage_form: values.dosage_form,
-        company_name: values.company_name, circulation_permit: values.circulation_permit
+    axios
+      .post("https://ut-project-be.vercel.app/api/vn-medicine-approved", {
+        medicine_name: values.medicine_name,
+        content: values.content,
+        component: currentAdd,
+        dosage_form: values.dosage_form,
+        company_name: values.company_name,
+        circulation_permit: values.circulation_permit,
       })
-      .then(response => {
-        console.log('them thuoc thanh cong');
+      .then((response) => {
+        console.log("them thuoc thanh cong");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(message);
       });
-    
-    console.log('add medicin:', 'with values:', values);
+
+    console.log("add medicin:", "with values:", values);
     setVisible3(false);
   };
 
@@ -137,38 +165,44 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
     setVisible4(false);
   };
   const handleModal4Submit = (values) => {
-    axios.post('https://ut-project-be.vercel.app/api/add-component', { 
-        cure:values.cure,
-        component: values.component, gene: values.gene, approved : true
+    axios
+      .post("https://ut-project-be.vercel.app/api/add-component", {
+        cure: values.cure,
+        component: values.component,
+        gene: values.gene,
+        approved: true,
       })
-      .then(response => {
+      .then((response) => {
         console.log("them thanh cong hoat chat");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(message);
       });
-    
+
     setVisible4(false);
   };
   return (
     <Row gutter={16}>
-      <Col span={24}>
-        <Card style={{ marginBottom: 16 }}>
-          <Button
-            type="dashed"
-            icon={<PlusOutlined />}
-            onClick={handleAddComponent}
-          >
-            Thêm hoạt chất
-          </Button>
-        </Card>
-      </Col>
+      {role && (
+        <Col span={24}>
+          <Card style={{ marginBottom: 16 }}>
+            <Button
+              type="dashed"
+              icon={<PlusOutlined />}
+              onClick={handleAddComponent}
+            >
+              Thêm hoạt chất
+            </Button>
+          </Card>
+        </Col>
+      )}
       {datas.map((data) => (
         <Col key={data._id} span={24}>
           <Card
             title={data.component}
             style={{ marginBottom: 16 }}
             extra={
+              role && (
               <Space>
                 <Button
                   type="text"
@@ -191,49 +225,74 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
                   Thêm thuốc
                 </Button>
               </Space>
+              )
             }
           >
-            <p><strong className="component-name">Cure:</strong> {data.cure}</p>
-            <p><strong className="component-name">Gene:</strong> {data.gene}</p>
+            <p>
+              <strong className="component-name">Cure:</strong> {data.cure}
+            </p>
+            <p>
+              <strong className="component-name">Gene:</strong> {data.gene}
+            </p>
             <Collapse ghost>
-              <Panel header={<strong className="collapse-header">Thuốc</strong>} key="1">
+              <Panel
+                header={<strong className="collapse-header">Thuốc</strong>}
+                key="1"
+              >
                 <Row gutter={16}>
                   {data.medicines.map((medicine) => (
                     <Col key={medicine._id} span={24}>
                       <Card
                         actions={[
+                          role && (
                           <Button
                             type="text"
                             icon={<EditOutlined />}
                             onClick={() => handleEdit(medicine)}
-                          />,
+                          />),
+                          role && (
                           <Popconfirm
                             title="Are you sure to delete this medicine?"
                             onConfirm={() => handleDelete(medicine._id)}
                             okText="Yes"
                             cancelText="No"
                           >
-                            <Button type="text" danger icon={<DeleteOutlined />} />
+                            <Button
+                              type="text"
+                              danger
+                              icon={<DeleteOutlined />}
+                            />
                           </Popconfirm>
+                          ),
                         ]}
                       >
                         <Meta
                           title={
-                            <strong className="medicine-name">{medicine.medicine_name}</strong>
+                            <strong className="medicine-name">
+                              {medicine.medicine_name}
+                            </strong>
                           }
                           description={
                             <>
-                              <p><strong>Content:</strong> {medicine.content}</p>
-                              <p><strong>Dosage Form:</strong> {medicine.dosage_form}</p>
-                              <p><strong>Packing:</strong> {medicine.packing}</p>
-                              <p><strong>Company Name:</strong> {medicine.company_name}</p>
                               <p>
-                                <strong>Circulation Permit:</strong> 
-                                {medicine.approved ? (
-                                  medicine.circulation_permit
-                                ) : (
-                                  'Hết hạn'
-                                )}
+                                <strong>Content:</strong> {medicine.content}
+                              </p>
+                              <p>
+                                <strong>Dosage Form:</strong>{" "}
+                                {medicine.dosage_form}
+                              </p>
+                              <p>
+                                <strong>Packing:</strong> {medicine.packing}
+                              </p>
+                              <p>
+                                <strong>Company Name:</strong>{" "}
+                                {medicine.company_name}
+                              </p>
+                              <p>
+                                <strong>Circulation Permit:</strong>
+                                {medicine.approved
+                                  ? medicine.circulation_permit
+                                  : "Hết hạn"}
                               </p>
                             </>
                           }
@@ -247,7 +306,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           </Card>
         </Col>
       ))}
-      
+
       <Modal
         title="Sửa thông tin hoạt chất"
         visible={visible}
@@ -258,7 +317,9 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Tên hoạt chất"
             name="component"
-            rules={[{ required: true, message: 'Vui lòng nhập tên hoạt chất!' }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập tên hoạt chất!" },
+            ]}
             initialValue={currentComponent?.component}
           >
             <Input />
@@ -266,7 +327,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Cure"
             name="cure"
-            rules={[{ required: true, message: 'Vui lòng nhập cure!' }]}
+            rules={[{ required: true, message: "Vui lòng nhập cure!" }]}
             initialValue={currentComponent?.cure}
           >
             <Input />
@@ -274,7 +335,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Gene"
             name="gene"
-            rules={[{ required: true, message: 'Vui lòng nhập gene!' }]}
+            rules={[{ required: true, message: "Vui lòng nhập gene!" }]}
             initialValue={currentComponent?.gene}
           >
             <Input />
@@ -296,7 +357,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Tên thuốc"
             name="medicine_name"
-            rules={[{ required: true, message: 'Vui lòng nhập tên thuốc!' }]}
+            rules={[{ required: true, message: "Vui lòng nhập tên thuốc!" }]}
             initialValue={currentMedicine?.medicine_name}
           >
             <Input />
@@ -304,7 +365,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Content"
             name="content"
-            rules={[{ required: true, message: 'Vui lòng nhập content!' }]}
+            rules={[{ required: true, message: "Vui lòng nhập content!" }]}
             initialValue={currentMedicine?.content}
           >
             <Input />
@@ -312,7 +373,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Dosage form"
             name="dosage_form"
-            rules={[{ required: true, message: 'Vui lòng nhập dosage form!' }]}
+            rules={[{ required: true, message: "Vui lòng nhập dosage form!" }]}
             initialValue={currentMedicine?.dosage_form}
           >
             <Input />
@@ -320,7 +381,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Company name"
             name="company_name"
-            rules={[{ required: true, message: 'Vui lòng nhập company name!' }]}
+            rules={[{ required: true, message: "Vui lòng nhập company name!" }]}
             initialValue={currentMedicine?.company_name}
           >
             <Input />
@@ -328,7 +389,9 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Circulation permit"
             name="circulation_permit"
-            rules={[{ required: true, message: 'Vui lòng nhập circulation permit!' }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập circulation permit!" },
+            ]}
             initialValue={currentMedicine?.circulation_permit}
           >
             <Input />
@@ -351,40 +414,42 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Tên thuốc"
             name="medicine_name"
-            rules={[{ required: true, message: 'Vui lòng nhập tên thuốc!' }]}
-            initialValue=''
+            rules={[{ required: true, message: "Vui lòng nhập tên thuốc!" }]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Content"
             name="content"
-            rules={[{ required: true, message: 'Vui lòng nhập content!' }]}
-            initialValue=''
+            rules={[{ required: true, message: "Vui lòng nhập content!" }]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Dosage form"
             name="dosage_form"
-            rules={[{ required: true, message: 'Vui lòng nhập dosage form!' }]}
-            initialValue=''
+            rules={[{ required: true, message: "Vui lòng nhập dosage form!" }]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Company name"
             name="company_name"
-            rules={[{ required: true, message: 'Vui lòng nhập company name!' }]}
-            initialValue=''
+            rules={[{ required: true, message: "Vui lòng nhập company name!" }]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Circulation permit"
             name="circulation_permit"
-            rules={[{ required: true, message: 'Vui lòng nhập circulation permit!' }]}
-            initialValue=''
+            rules={[
+              { required: true, message: "Vui lòng nhập circulation permit!" },
+            ]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
@@ -394,7 +459,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
             </Button>
           </Form.Item>
         </Form>
-      </Modal> 
+      </Modal>
 
       <Modal
         title="Thêm hoạt chất"
@@ -406,24 +471,26 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           <Form.Item
             label="Tên hoạt chất"
             name="component"
-            rules={[{ required: true, message: 'Vui lòng nhập tên hoạt chất!' }]}
-            initialValue=''
+            rules={[
+              { required: true, message: "Vui lòng nhập tên hoạt chất!" },
+            ]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Cure"
             name="cure"
-            rules={[{ required: true, message: 'Vui lòng nhập cure!' }]}
-            initialValue=''
+            rules={[{ required: true, message: "Vui lòng nhập cure!" }]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Gene"
             name="gene"
-            rules={[{ required: true, message: 'Vui lòng nhập gene!' }]}
-            initialValue=''
+            rules={[{ required: true, message: "Vui lòng nhập gene!" }]}
+            initialValue=""
           >
             <Input />
           </Form.Item>
@@ -433,13 +500,13 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
             </Button>
           </Form.Item>
         </Form>
-      </Modal> 
+      </Modal>
       <Pagination
-          current={currentPage1}
-          pageSize={5}
-          total={metadata.totalPage*5}
-          onChange={handlePageChange}
-        />
+        current={currentPage1}
+        pageSize={5}
+        total={metadata.totalPage * 5}
+        onChange={handlePageChange}
+      />
     </Row>
   );
 };

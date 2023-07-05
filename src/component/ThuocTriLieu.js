@@ -13,10 +13,9 @@ function App() {
   const [dataFDA, setDataFDA] = useState(null);
   const [curentPage, setCurentPage] = useState(1);
   const [metadata, setMetadata] = useState(null);
+  const [role, setRole] = useState(false);
 
 
-  
-  
   const handleMenuClick = ({ key }) => {
     setSelectedButton(key);
     setCurentPage(1);
@@ -91,13 +90,13 @@ function App() {
       </Header>
       <Content style={{ padding: '50px' }}>
         {datas && selectedButton === "1" && (
-          <ViewThuocTriLieu datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
+          <ViewThuocTriLieu datas={datas} setCurentPage={setCurentPage} metadata={metadata} role={role}/>
         )}
         {datas && selectedButton === "2" && (
-          <ViewThuocHetHan datas={datas} setCurentPage={setCurentPage} metadata={metadata} />
+          <ViewThuocHetHan datas={datas} setCurentPage={setCurentPage} metadata={metadata} role={role}/>
         )}
         {dataFDA && selectedButton === "3" && (
-          <ViewFDA datas={dataFDA} setCurentPage={setCurentPage} metadata={metadata} />
+          <ViewFDA datas={dataFDA} setCurentPage={setCurentPage} metadata={metadata} role={role}/>
         )}
       </Content>
     </Layout>

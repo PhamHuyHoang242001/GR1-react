@@ -6,7 +6,7 @@ import axios from 'axios';
 const { Panel } = Collapse;
 const { Meta } = Card;
 
-const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
+const ViewThuocTriLieu = ({datas, setCurentPage, metadata, role}) => {
   const [visible, setVisible] = useState(false);
   const [currentComponent, setCurrentComponent] = useState(null);
   const [visible2, setVisible2] = useState(false);
@@ -152,6 +152,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
   };
   return (
     <Row gutter={16}>
+      {role && (
       <Col span={24}>
         <Card style={{ marginBottom: 16 }}>
           <Button
@@ -163,12 +164,14 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
           </Button>
         </Card>
       </Col>
+      )}
       {datas.map((data) => (
         <Col key={data._id} span={24}>
           <Card
             title={data.component}
             style={{ marginBottom: 16 }}
             extra={
+              role && (
               <Space>
                 <Button
                   type="text"
@@ -191,6 +194,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
                   Thêm thuốc
                 </Button>
               </Space>
+              )
             }
           >
             <p><strong className="component-name">Cure:</strong> {data.cure}</p>
@@ -202,11 +206,13 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
                     <Col key={medicine._id} span={24}>
                       <Card
                         actions={[
+                          role && (
                           <Button
                             type="text"
                             icon={<EditOutlined />}
                             onClick={() => handleEdit(medicine)}
-                          />,
+                          />),
+                          role && (
                           <Popconfirm
                             title="Are you sure to delete this medicine?"
                             onConfirm={() => handleDelete(medicine._id)}
@@ -215,6 +221,7 @@ const ViewThuocTriLieu = ({datas, setCurentPage, metadata}) => {
                           >
                             <Button type="text" danger icon={<DeleteOutlined />} />
                           </Popconfirm>
+                          )
                         ]}
                       >
                         <Meta
